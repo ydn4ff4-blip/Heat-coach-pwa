@@ -1,0 +1,81 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Heat Coach Pro</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="bubble" class="card">
+    <div class="header">
+      <div class="title">Heat Coach Pro</div>
+      <div id="status" class="pill s-cold">COLD</div>
+    </div>
+    <div class="meta">
+      <div>Heat: <b id="heat">0</b></div>
+      <div>Dead: <b id="dead">0</b></div>
+    </div>
+    <div class="grid2">
+      <button class="btn" onclick="mark('scatter',2)">+2 Scatter</button>
+      <button class="btn" onclick="mark('connect',1)">+1 Connect</button>
+      <button class="btn" onclick="mark('dead',2)">Cold +2</button>
+      <button class="btn" onclick="resetRun()">Reset</button>
+    </div>
+
+    <div class="row">
+      <button class="btn subtle" onclick="toggleMini()">Minimize</button>
+      <button class="btn subtle" onclick="toggleConfig()">Ambang</button>
+    </div>
+
+    <div id="config" class="config hidden">
+      <div class="cfgrow"><label>WARM ≥</label><input id="twarm" type="number" min="1" max="20" value="4"></div>
+      <div class="cfgrow"><label>HOT ≥</label><input id="thot"  type="number" min="1" max="30" value="7"></div>
+      <div class="cfgrow"><label>COLD Dead ≥</label><input id="tcold" type="number" min="1" max="50" value="12"></div>
+      <button class="btn" style="width:100%" onclick="saveCfg()">Simpan Ambang</button>
+    </div>
+
+    <div class="checklist card inner">
+      <h3>Checklist</h3>
+      <div class="grid2">
+        <label class="check"><input type="checkbox" id="cb_scatter"> Scatter muncul</label>
+        <label class="check"><input type="checkbox" id="cb_multiplier"> Multiplier muncul</label>
+        <label class="check"><input type="checkbox" id="cb_connect"> Simbol connect</label>
+        <label class="check"><input type="checkbox" id="cb_free"> Free spin</label>
+        <label class="check"><input type="checkbox" id="cb_back2back"> Back‑to‑back connect</label>
+        <label class="check"><input type="checkbox" id="cb_big_tumble"> Tumble besar</label>
+        <label class="check"><input type="checkbox" id="cb_dead"> Dead spin berturut</label>
+        <label class="check"><input type="checkbox" id="cb_loss_buy"> Beli FS rugi</label>
+      </div>
+    </div>
+
+    <div id="logCard" class="card inner">
+      <h3>Riwayat Sesi</h3>
+      <div id="log"></div>
+      <button class="btn" style="width:100%;margin-top:8px" onclick="exportCSV()">Export CSV</button>
+    </div>
+  </div>
+
+  <div id="mini" class="mini pill s-cold">
+    <div id="dot"></div>
+    <span id="miniText">COLD</span>
+    <button class="btn tiny" onclick="mark('connect',1)">+1</button>
+    <button class="btn tiny" onclick="mark('dead',1)">C+1</button>
+    <button class="btn tiny" onclick="toggleMini()">▣</button>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
